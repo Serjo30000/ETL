@@ -1,0 +1,49 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    env_file:
+      - postgres.env
+    networks:
+      - app_network
+    volumes:
+      - postgres_volume_new:/var/lib/postgresql/data
+  mongo:
+    image: mongo:latest
+    env_file:
+      - mongo.env
+    networks:
+      - app_network
+    volumes:
+      - mongo_volume_new:/var/lib/mongonosql/data
+  app_postgres:
+    build:
+      context: .
+      dockerfile: ServerDataPostgres/Dockerfile
+    env_file:
+      - app.env
+    networks:
+      - app_network
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+  app_mongo:
+    build:
+      context: .
+      dockerfile: ServerDataMongo/Dockerfile
+    env_file:
+      - app.env
+    networks:
+      - app_network
+    depends_on:
+      - mongo
+      - app_postgres
+networks:
+  app_network:
+    driver: bridge
+volumes:
+  postgres_volume_new:
+    driver: local
+  mongo_volume_new:
+    driver: local

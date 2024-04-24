@@ -1,0 +1,10 @@
+sqlalchemy
+psycopg2-binary
+redis
+flask
+async-timeout
+load_dotenv
+requests
+pymongo
+MongoAlchemyVoltron
+mongoengine
