@@ -19,7 +19,7 @@ class DbSyncService:
 
         old_cars = self.car_repository.read_all()
 
-        existing_car_ids = [car.id for car in old_cars]
+        existing_car_ids = [car['car_number_id'] for car in old_cars]
 
         for api_car in api_cars:
             if api_car['id'] not in existing_car_ids:
@@ -47,7 +47,7 @@ class DbSyncService:
 
         old_parkings = self.parking_repository.read_all()
 
-        existing_parking_ids = [parking.id for parking in old_parkings]
+        existing_parking_ids = [parking['parking_number_id'] for parking in old_parkings]
 
         for api_parking in parkings:
             if api_parking['id'] not in existing_parking_ids:
